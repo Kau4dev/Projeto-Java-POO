@@ -3,31 +3,13 @@ package dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 import models.Tarefa;
 import utils.conexao;
 
 public class TarefaDAO {
 
-    // Atualizar o status da tarefa
-    public boolean atualizarStatus(int idTarefa, String novoStatus) {
-        String sql = "UPDATE tarefas SET status = ? WHERE id = ?";
-
-        try (Connection conn = conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, novoStatus);
-            stmt.setInt(2, idTarefa);
-
-            int linhasAfetadas = stmt.executeUpdate();
-            return linhasAfetadas > 0;
-
-        } catch (SQLException e) {
-            System.out.println("Erro ao atualizar status: " + e.getMessage());
-            return false;
-        }
-    }
-
-    // Listar tarefas por colaborador (caso prefira concentrar tudo aqui)
+    // Listar tarefas de um colaborador
     public List<Tarefa> listarPorColaborador(int colaboradorId) {
         List<Tarefa> lista = new ArrayList<>();
         String sql = "SELECT * FROM tarefas WHERE colaborador_id = ?";
@@ -54,6 +36,23 @@ public class TarefaDAO {
 
         return lista;
     }
+
+    // Atualizar status da tarefa
+    public boolean atualizarStatus(int tarefaId, String novoStatus) {
+        String sql = "UPDATE tarefas SET status = ? WHERE id = ?";
+
+        try (Connection conn = conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, novoStatus);
+            stmt.setInt(2, tarefaId);
+
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar status: " + e.getMessage());
+            return false;
+        }
+    }
 }
-
-
