@@ -1,27 +1,25 @@
-public boolean atualizarStatus(int idDaTarefa, String novoStatus) {
+import java.util.Scanner;
+import dao.TarefaDAO;
 
-    String sql = "UPDATE tarefas SET status = ? WHERE id = ?";
+public class AtualizarStatus {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        TarefaDAO tarefaDAO = new TarefaDAO();
 
-    try {
-       
-        Connection conexao = conexao.conectar();
+        System.out.print("Digite o ID da tarefa: ");
+        int id = Integer.parseInt(scanner.nextLine());
 
-     
-        PreparedStatement comando = conexao.prepareStatement(sql);
-        comando.setString(1, novoStatus);   
-        comando.setInt(2, idDaTarefa);      
+        System.out.print("Digite o novo status: ");
+        String status = scanner.nextLine();
 
-        // Executa a atualização
-        int resultado = comando.executeUpdate();
+        boolean sucesso = tarefaDAO.atualizarStatus(id, status);
 
-        // Se pelo menos 1 linha foi alterada, retorna true (sucesso)
-        return resultado > 0;
+        if (sucesso) {
+            System.out.println("✅ Status atualizado com sucesso!");
+        } else {
+            System.out.println("❌ Falha ao atualizar status.");
+        }
 
-    } catch (SQLException erro) {
-        // Mostra o erro no console se der problema
-        System.out.println("Erro ao atualizar o status da tarefa: " + erro.getMessage());
-        return false;
+        scanner.close();
     }
 }
-
-
