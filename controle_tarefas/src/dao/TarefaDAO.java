@@ -8,7 +8,26 @@ import utils.conexao;
 
 public class TarefaDAO {
 
-    // Método para listar as tarefas de um colaborador pelo ID
+    // Atualizar o status da tarefa
+    public boolean atualizarStatus(int idTarefa, String novoStatus) {
+        String sql = "UPDATE tarefas SET status = ? WHERE id = ?";
+
+        try (Connection conn = conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, novoStatus);
+            stmt.setInt(2, idTarefa);
+
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar status: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // Listar tarefas por colaborador (caso prefira concentrar tudo aqui)
     public List<Tarefa> listarPorColaborador(int colaboradorId) {
         List<Tarefa> lista = new ArrayList<>();
         String sql = "SELECT * FROM tarefas WHERE colaborador_id = ?";
@@ -35,44 +54,6 @@ public class TarefaDAO {
 
         return lista;
     }
-
-    // Método para atualizar o status da tarefa
-    public boolean atualizarStatus(int idDaTarefa, String novoStatus) {
-        String sql = "UPDATE tarefas SET status = ? WHERE id = ?";
-
-        try (Connection conn = conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, novoStatus);
-            stmt.setInt(2, idDaTarefa);
-
-            int linhasAfetadas = stmt.executeUpdate();
-            return linhasAfetadas > 0;
-
-        } catch (SQLException e) {
-            System.out.println("Erro ao atualizar status: " + e.getMessage());
-            return false;
-        }
-    }
-
-    // Método main para testar os métodos acima
-    public static void main(String[] args) {
-        TarefaDAO tarefaDAO = new TarefaDAO();
-
-        // 1. Buscar tarefas do colaborador com ID 3
-        List<Tarefa> tarefas = tarefaDAO.listarPorColaborador(3);
-        for (Tarefa t : tarefas) {
-            System.out.println(t.getId() + " - " + t.getTitulo() + " - " + t.getStatus());
-        }
-
-        // 2. Atualizar o status da tarefa com ID 2
-        boolean sucesso = tarefaDAO.atualizarStatus(2, "Concluída");
-
-        if (sucesso) {
-            System.out.println("Status atualizado com sucesso!");
-        } else {
-            System.out.println("Erro ao atualizar status.");
-        }
-    }
 }
+
 
