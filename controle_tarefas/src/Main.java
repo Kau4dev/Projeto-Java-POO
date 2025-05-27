@@ -99,6 +99,8 @@ public class Main {
                 break;
             }
 
+            // Aqui você pode implementar as funcionalidades específicas do gerente
+
             System.out.println("Sem funcionalidade implementada ainda.");
         }
     }
@@ -120,6 +122,8 @@ public class Main {
                 System.out.println("Você escolheu sair.");
                 break;
             }
+
+            // Aqui você pode implementar as funcionalidades específicas do colaborador
 
             System.out.println("Sem funcionalidade implementada ainda.");
         }
