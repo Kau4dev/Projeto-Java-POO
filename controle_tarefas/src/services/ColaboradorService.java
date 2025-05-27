@@ -8,7 +8,6 @@ import models.Tarefa;
 
 public class ColaboradorService {
 
-    // Método para exibir as tarefas de um colaborador
     public void consultarTarefas(Scanner scanner, int colaboradorId) {
         System.out.println("\n=== Tarefas do Colaborador ===");
 
@@ -28,7 +27,6 @@ public class ColaboradorService {
         }
     }
 
-    // Método para atualizar o status de uma tarefa
     public void atualizarStatusTarefa(Scanner scanner) {
         System.out.println("\n=== Atualizar Status da Tarefa ===");
 
