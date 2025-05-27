@@ -1,0 +1,6 @@
+{
+  "java.project.sourcePaths": ["controle_tarefas\\src"],
+  "java.project.referencedLibraries": [
+    "controle_tarefas\\lib\\sqlite-jdbc-3.49.1.0.jar"
+  ]
+}
