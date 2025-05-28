@@ -22,28 +22,42 @@ public class Tarefa {
         this.categoriaId = categoriaId;
     }
 
-    // Getters e setters
     public int getId() {
-         return id;
-          }
+        return id;
+    }
+
     public String getTitulo() { 
         return titulo; 
-         }
+    }
+
     public String getStatus() { 
         return status; 
-         }
+    }
+
     public int getGerenteId() {
          return gerenteId;
-          }
+    }
+
     public int getCategoriaId() {
          return categoriaId;
-          }
+    }
 
-    public void setId(int id) { this.id = id; }
-    public void setTitulo(String titulo) { this.titulo = titulo; }
-    public void setStatus(String status) { this.status = status; }
-    public void setGerenteId(int gerenteId) { this.gerenteId = gerenteId; }
-    public void setCategoriaId(int categoriaId) { this.categoriaId = categoriaId; }
+    public void setId(int id) {
+         this.id = id; 
+    }
+
+    public void setTitulo(String titulo) { 
+        this.titulo = titulo; 
+    }
+    public void setStatus(String status) { 
+        this.status = status; 
+    }
+    public void setGerenteId(int gerenteId) { 
+        this.gerenteId = gerenteId; 
+    }
+    public void setCategoriaId(int categoriaId) { 
+        this.categoriaId = categoriaId; 
+    }
 }
 
 
