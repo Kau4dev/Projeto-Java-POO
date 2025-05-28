@@ -2,14 +2,18 @@ import java.util.Scanner;
 
 import models.Colaborador;
 import models.Gerente;
+import services.CategoriaService;
 import services.ColaboradorService;
 import services.GerenteService;
+import services.TarefaService;
 import utils.DbSetup;
 
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static final GerenteService gerenteService = new GerenteService();
     private static final ColaboradorService colaboradorService = new ColaboradorService();
+    private static final TarefaService tarefaService = new TarefaService();
+    private static final CategoriaService categoriaService = new CategoriaService();
 
     public static void main(String[] args) {
         DbSetup.criarTabelas();
@@ -62,7 +66,7 @@ public class Main {
                     return;
                 }
                 System.out.println("=== Bem-Vindo, " + gerente.getNome() + " ===");
-                exibirMenuGerente();
+                exibirMenuGerente(gerente);
             }
             case 2 -> {
                 Colaborador colaborador = colaboradorService.loginColaborador(scanner);
@@ -77,7 +81,7 @@ public class Main {
         }
     }
 
-    private static void exibirMenuGerente() {
+    private static void exibirMenuGerente(Gerente gerente) {
         while (true) {
             System.out.println("""
                 Funcionalidades disponíveis:
@@ -88,20 +92,27 @@ public class Main {
                 5 - Visualizar Colaboradores
                 6 - Deletar Tarefa
                 7 - Deletar Colaborador
-                8 - Pesquisar Tarefa
+                8 - Visualizar Categorias de Tarefas
                 9 - Sair
                 """);
             System.out.print("Digite sua escolha: ");
             int escolha = lerInteiro();
 
-            if (escolha == 9) {
-                System.out.println("Você escolheu sair.");
-                break;
+            switch (escolha) {
+                case 1 -> colaboradorService.cadastrarColaborador(scanner);
+                case 2 -> tarefaService.cadastrarTarefa(scanner, gerente.getId());
+                case 3 -> tarefaService.editarTarefa(scanner, gerente.getId());
+                case 4 -> tarefaService.visualizarTarefas();
+                case 5 -> colaboradorService.listarColaboradores(); // Consulta colaboradores
+                case 6 -> System.out.println("Funcionalidade deletar tarefa ainda não implementada.");
+                case 7 -> System.out.println("Funcionalidade deletar colaborador ainda não implementada.");
+                case 8 -> categoriaService.listarCategorias(); // Consulta categorias
+                case 9 -> {
+                    System.out.println("Você escolheu sair.");
+                    return;
+                }
+                default -> System.out.println("Opção inválida.");
             }
-
-            // Aqui você pode implementar as funcionalidades específicas do gerente
-
-            System.out.println("Sem funcionalidade implementada ainda.");
         }
     }
 
@@ -122,8 +133,6 @@ public class Main {
                 System.out.println("Você escolheu sair.");
                 break;
             }
-
-            // Aqui você pode implementar as funcionalidades específicas do colaborador
 
             System.out.println("Sem funcionalidade implementada ainda.");
         }
