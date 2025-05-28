@@ -90,20 +90,21 @@ public class Main {
                 7 - Deletar Colaborador
                 8 - Pesquisar Tarefa
                 9 - Sair
-                """);
+                10 - Conectar Tarefa a um ou mais Colaboradores
+                 """);
             System.out.print("Digite sua escolha: ");
             int escolha = lerInteiro();
 
             if (escolha == 9) {
                 System.out.println("Você escolheu sair.");
                 break;
+            } else if (escolha == 10) {
+                tarefaService.conectarTarefaAColaboradores(scanner, gerente.getId());
+            } else {
+                System.out.println("Funcionalidade ainda não implementada.");
             }
 
-            // Aqui você pode implementar as funcionalidades específicas do gerente
-
-            System.out.println("Sem funcionalidade implementada ainda.");
         }
-    }
 
     private static void exibirMenuColaborador() {
         while (true) {
