@@ -2,7 +2,7 @@ package services;
 
 public class TarefaService {
     public void conectarTarefaAColaboradores(Scanner scanner, int gerenteId) {
-        System.out.print("Digite o ID da Tarefa: ");
+        System.out.print("Digite o ID da Tarefa:");
         int tarefaId = Integer.parseInt(scanner.nextLine());
 
         System.out.print("Digite os IDs dos colaboradores separados por vírgula: ");
