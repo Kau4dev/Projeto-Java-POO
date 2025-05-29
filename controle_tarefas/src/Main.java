@@ -92,23 +92,25 @@ public class Main {
                 7 - Deletar Colaborador
                 8 - Visualizar Categorias
                 9 - Sair
+                10 - Associar Tarefa a Colaboradores
                 """);
             System.out.print("Digite sua escolha: ");
             int escolha = lerInteiro();
 
             switch (escolha) {
                 case 1 -> colaboradorService.cadastrarColaborador(scanner);
-                // case 2 -> tarefaService.cadastrarTarefa(scanner, gerente.getId());
-                // case 3 -> tarefaService.editarTarefa(scanner, gerente.getId());
-                // case 4 -> tarefaService.visualizarTarefas();
-                // case 5 -> colaboradorService.visualizarColaboradores();
+                case 2 -> tarefaService.cadastrarTarefa(scanner, gerente.getId());
+                case 3 -> tarefaService.editarTarefa(scanner, gerente.getId());
+                case 4 -> tarefaService.visualizarTarefas();
+                case 5 -> colaboradorService.visualizarColaboradores();
                 case 6 -> tarefaService.deletarTarefa(scanner);
                 case 7 -> colaboradorService.deletarColaborador(scanner);
-                // case 8 -> tarefaService.visualizarCategorias();
+                case 8 -> tarefaService.visualizarCategorias();
                 case 9 -> {
                     System.out.println("Você escolheu sair.");
                     return;
                 }
+                case 10 -> tarefaService.associarTarefaAColaboradores(scanner);
                 default -> System.out.println("Opção inválida ou não implementada.");
             }
         }
@@ -126,8 +128,8 @@ public class Main {
             int escolha = lerInteiro();
 
             switch (escolha) {
-                // case 1 -> tarefaService.visualizarTarefasPorColaborador(scanner, colaborador.getId());
-                // case 2 -> tarefaService.atualizarStatusTarefa(scanner, colaborador.getId());
+                case 1 -> tarefaService.visualizarTarefasPorColaborador(scanner, colaborador.getId());
+                case 2 -> tarefaService.atualizarStatusTarefa(scanner, colaborador.getId());
                 case 3 -> {
                     System.out.println("Você escolheu sair.");
                     return;
