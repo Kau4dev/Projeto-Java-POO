@@ -1,28 +1,31 @@
 package services;
 
 public class TarefaService {
-    public void conectarTarefaAColaboradores(Scanner scanner, int gerenteId) {
-        System.out.print("Digite o ID da Tarefa:");
-        int tarefaId = Integer.parseInt(scanner.nextLine());
+    public void associarTarefaAColaboradores(Scanner scanner) {
+        try (Connection conn = Database.conectar()) {
+            System.out.print("ID da tarefa que deseja associar: ");
+            int tarefaId = Integer.parseInt(scanner.nextLine());
 
-        System.out.print("Digite os IDs dos colaboradores separados por vírgula: ");
-        String[] idsColaboradores = scanner.nextLine().split(",");
+            System.out.print("Quantos colaboradores deseja associar? ");
+            int qtd = Integer.parseInt(scanner.nextLine());
 
-        for (String idStr : idsColaboradores) {
-            try {
-                int colaboradorId = Integer.parseInt(idStr.trim());
+            String sql = "INSERT INTO tarefa_responsavel (tarefa_id, colaborador_id) VALUES (?, ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                for (int i = 0; i < qtd; i++) {
+                    System.out.print("ID do colaborador " + (i + 1) + ": ");
+                    int colaboradorId = Integer.parseInt(scanner.nextLine());
 
-                // Simulando a conexão:
-                System.out.println("Conectando Colaborador ID " + colaboradorId + " à Tarefa ID " + tarefaId);
+                    stmt.setInt(1, tarefaId);
+                    stmt.setInt(2, colaboradorId);
+                    stmt.addBatch();
+                }
 
-                // Aqui você poderia adicionar lógica de adicionar em uma lista ou coleção se quiser.
-
-            } catch (NumberFormatException e) {
-                System.out.println("ID inválido: " + idStr.trim());
+                stmt.executeBatch();
+                System.out.println("Colaboradores associados à tarefa com sucesso.");
             }
+        } catch (Exception e) {
+            System.out.println("Erro ao associar colaboradores à tarefa: " + e.getMessage());
         }
-
-        System.out.println("Conexão concluída.");
     }
 
 }
