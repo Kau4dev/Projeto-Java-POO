@@ -5,8 +5,6 @@ import java.util.Scanner;
 
 import dao.TarefaDAO;
 import models.Tarefa;
-import models.Categoria;
-import dao.CategoriaDAO;
 
 
 public class TarefaService {

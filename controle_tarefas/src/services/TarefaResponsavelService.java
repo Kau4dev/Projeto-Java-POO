@@ -2,8 +2,6 @@ package services;
 
 import dao.TarefaDAO;
 import models.Tarefa;
-import services.TarefaService;
-import services.CategoriaService;
 
 import java.util.Scanner;
 
