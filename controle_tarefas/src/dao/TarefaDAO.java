@@ -3,13 +3,30 @@ package dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import models.Tarefa;
 import utils.conexao;
 
 public class TarefaDAO {
+    public boolean cadastrarTarefa(Tarefa tarefa) {
+        String sql = "INSERT INTO tarefa (titulo, status, gerente_id, categoria_id) VALUES (?, ?, ?, ?)";
 
-    // Listar tarefas de um colaborador
+        try (Connection conn = conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, tarefa.getTitulo());
+            stmt.setString(2, tarefa.getStatus());
+            stmt.setInt(3, tarefa.getGerenteId());
+            stmt.setInt(4, tarefa.getCategoriaId());
+
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Erro ao cadastrar tarefa: " + e.getMessage());
+            return false;
+        }
+    }
+
     public List<Tarefa> listarPorColaborador(int colaboradorId) {
         List<Tarefa> lista = new ArrayList<>();
         String sql = "SELECT * FROM tarefas WHERE colaborador_id = ?";
@@ -37,22 +54,76 @@ public class TarefaDAO {
         return lista;
     }
 
-    // Atualizar status da tarefa
     public boolean atualizarStatus(int tarefaId, String novoStatus) {
         String sql = "UPDATE tarefas SET status = ? WHERE id = ?";
 
         try (Connection conn = conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setString(1, novoStatus);
             stmt.setInt(2, tarefaId);
 
             int linhasAfetadas = stmt.executeUpdate();
             return linhasAfetadas > 0;
-
         } catch (SQLException e) {
             System.out.println("Erro ao atualizar status: " + e.getMessage());
             return false;
         }
     }
+
+    public boolean deletar(int id) {
+        String sql = "DELETE FROM tarefa WHERE id = ?";
+
+        try (Connection conn = conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            System.out.println("Erro ao deletar tarefa: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean editarTarefa(Tarefa tarefa) {
+        String sql = "UPDATE tarefa SET titulo = ?, status = ?, categoria_id = ? WHERE id = ?";
+
+        try (Connection conn = conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, tarefa.getTitulo());
+            stmt.setString(2, tarefa.getStatus());
+            stmt.setInt(3, tarefa.getCategoriaId());
+            stmt.setInt(4, tarefa.getId());
+
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Erro ao editar tarefa: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    public boolean associarColaboradores(int tarefaId, Scanner scanner, int qtd) {
+        String sql = "INSERT INTO tarefa_responsavel (tarefa_id, colaborador_id) VALUES (?, ?)";
+
+        try (Connection conn = conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            for (int i = 0; i < qtd; i++) {
+                System.out.print("ID do colaborador " + (i + 1) + ": ");
+                int colaboradorId = Integer.parseInt(scanner.nextLine());
+
+                stmt.setInt(1, tarefaId);
+                stmt.setInt(2, colaboradorId);
+                stmt.addBatch();
+            }
+
+            stmt.executeBatch();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Erro ao associar colaboradores à tarefa: " + e.getMessage());
+
+            return false;
+        }
+    }
 }
+
