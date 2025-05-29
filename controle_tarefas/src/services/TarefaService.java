@@ -1,5 +1,8 @@
 package services;
 
+import java.util.Scanner;
+import models.Colaborador;
+
 public class TarefaService {
     public void conectarTarefaAColaboradores(Scanner scanner, int gerenteId) {
         System.out.print("Digite o ID da Tarefa:");

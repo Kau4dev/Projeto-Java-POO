@@ -4,12 +4,14 @@ import models.Colaborador;
 import models.Gerente;
 import services.ColaboradorService;
 import services.GerenteService;
+import services.TarefaService;
 import utils.DbSetup;
 
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static final GerenteService gerenteService = new GerenteService();
     private static final ColaboradorService colaboradorService = new ColaboradorService();
+    private static final TarefaService tarefaService = new TarefaService();
 
     public static void main(String[] args) {
         DbSetup.criarTabelas();
@@ -62,7 +64,7 @@ public class Main {
                     return;
                 }
                 System.out.println("=== Bem-Vindo, " + gerente.getNome() + " ===");
-                exibirMenuGerente();
+                exibirMenuGerente(gerente);
             }
             case 2 -> {
                 Colaborador colaborador = colaboradorService.loginColaborador(scanner);
@@ -76,8 +78,7 @@ public class Main {
             default -> System.out.println("Tipo de usuário inválido.");
         }
     }
-
-    private static void exibirMenuGerente() {
+    private static void exibirMenuGerente(Gerente gerente) {
         while (true) {
             System.out.println("""
                 Funcionalidades disponíveis:
@@ -103,8 +104,9 @@ public class Main {
             } else {
                 System.out.println("Funcionalidade ainda não implementada.");
             }
-
         }
+    }
+
 
     private static void exibirMenuColaborador() {
         while (true) {
