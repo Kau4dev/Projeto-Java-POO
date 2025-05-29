@@ -1,7 +1,8 @@
 package services;
 
 import java.util.Scanner;
-import models.Colaborador;
+
+import dao.TarefaDAO;
 
 public class TarefaService {
     public void conectarTarefaAColaboradores(Scanner scanner, int gerenteId) {
@@ -28,4 +29,17 @@ public class TarefaService {
         System.out.println("Conexão concluída.");
     }
 
+    public void deletarTarefa(Scanner scanner) {
+        System.out.print("Digite o ID da tarefa a ser deletada: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        TarefaDAO tarefaDAO = new TarefaDAO();
+        boolean sucesso = tarefaDAO.deletar(id);
+
+        if (sucesso) {
+            System.out.println("✅ Tarefa deletada com sucesso!");
+        } else {
+            System.out.println("❌ Tarefa não encontrada ou erro ao deletar.");
+        }
+    }
 }

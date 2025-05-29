@@ -73,11 +73,12 @@ public class Main {
                     return;
                 }
                 System.out.println("=== Bem-Vindo, " + colaborador.getNome() + " ===");
-                exibirMenuColaborador();
+                exibirMenuColaborador(colaborador);
             }
             default -> System.out.println("Tipo de usuário inválido.");
         }
     }
+
     private static void exibirMenuGerente(Gerente gerente) {
         while (true) {
             System.out.println("""
@@ -89,46 +90,50 @@ public class Main {
                 5 - Visualizar Colaboradores
                 6 - Deletar Tarefa
                 7 - Deletar Colaborador
-                8 - Pesquisar Tarefa
+                8 - Visualizar Categorias
                 9 - Sair
-                10 - Conectar Tarefa a um ou mais Colaboradores
-                 """);
-            System.out.print("Digite sua escolha: ");
-            int escolha = lerInteiro();
-
-            if (escolha == 9) {
-                System.out.println("Você escolheu sair.");
-                break;
-            } else if (escolha == 10) {
-                tarefaService.conectarTarefaAColaboradores(scanner, gerente.getId());
-            } else {
-                System.out.println("Funcionalidade ainda não implementada.");
-            }
-        }
-    }
-
-
-    private static void exibirMenuColaborador() {
-        while (true) {
-            System.out.println("""
-                Funcionalidades disponíveis:
-                1 - Visualizar Tarefas
-                2 - Editar Tarefa
-                3 - Deletar Tarefa
-                4 - Pesquisar Tarefa
-                5 - Sair
                 """);
             System.out.print("Digite sua escolha: ");
             int escolha = lerInteiro();
 
-            if (escolha == 5) {
-                System.out.println("Você escolheu sair.");
-                break;
+            switch (escolha) {
+                case 1 -> colaboradorService.cadastrarColaborador(scanner);
+                // case 2 -> tarefaService.cadastrarTarefa(scanner, gerente.getId());
+                // case 3 -> tarefaService.editarTarefa(scanner, gerente.getId());
+                // case 4 -> tarefaService.visualizarTarefas();
+                // case 5 -> colaboradorService.visualizarColaboradores();
+                case 6 -> tarefaService.deletarTarefa(scanner);
+                case 7 -> colaboradorService.deletarColaborador(scanner);
+                // case 8 -> tarefaService.visualizarCategorias();
+                case 9 -> {
+                    System.out.println("Você escolheu sair.");
+                    return;
+                }
+                default -> System.out.println("Opção inválida ou não implementada.");
             }
+        }
+    }
 
-            // Aqui você pode implementar as funcionalidades específicas do colaborador
+    private static void exibirMenuColaborador(Colaborador colaborador) {
+        while (true) {
+            System.out.println("""
+                Funcionalidades disponíveis:
+                1 - Visualizar Tarefas
+                2 - Editar Status de Tarefa
+                3 - Sair
+                """);
+            System.out.print("Digite sua escolha: ");
+            int escolha = lerInteiro();
 
-            System.out.println("Sem funcionalidade implementada ainda.");
+            switch (escolha) {
+                // case 1 -> tarefaService.visualizarTarefasPorColaborador(scanner, colaborador.getId());
+                // case 2 -> tarefaService.atualizarStatusTarefa(scanner, colaborador.getId());
+                case 3 -> {
+                    System.out.println("Você escolheu sair.");
+                    return;
+                }
+                default -> System.out.println("Opção inválida ou não implementada.");
+            }
         }
     }
 
