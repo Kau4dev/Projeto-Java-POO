@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 import models.Colaborador;
 import models.Gerente;
 import services.CategoriaService;
@@ -43,7 +42,6 @@ public class Main {
     private static void exibirMenuPrincipal() {
         System.out.println("==============================================================================");
         System.out.println("Controle de Tarefas");
-        System.out.println("Faça:");
         System.out.println("1 - Login");
         System.out.println("2 - Cadastro");
         System.out.println("3 - Sair");
@@ -79,6 +77,22 @@ public class Main {
                 System.out.println("=== Bem-Vindo, " + colaborador.getNome() + " ===");
                 exibirMenuColaborador(colaborador);
             }
+            default -> System.out.println("Tipo de usuário inválido.");
+        }
+    }
+
+    private static void realizarCadastro() {
+        System.out.println("=== Sistema de Cadastro ===");
+        System.out.println("Qual tipo de usuário?");
+        System.out.println("1 - Gerente");
+        System.out.println("2 - Colaborador");
+        System.out.print("Digite: ");
+
+        int tipo = lerInteiro();
+
+        switch (tipo) {
+            case 1 -> gerenteService.cadastrarGerente(scanner);
+            case 2 -> colaboradorService.cadastrarColaborador(scanner);
             default -> System.out.println("Tipo de usuário inválido.");
         }
     }
@@ -140,22 +154,6 @@ public class Main {
                 }
                 default -> System.out.println("Opção inválida ou não implementada.");
             }
-        }
-    }
-
-    private static void realizarCadastro() {
-        System.out.println("=== Sistema de Cadastro ===");
-        System.out.println("Qual tipo de usuário?");
-        System.out.println("1 - Gerente");
-        System.out.println("2 - Colaborador");
-        System.out.print("Digite: ");
-
-        int tipo = lerInteiro();
-
-        switch (tipo) {
-            case 1 -> gerenteService.cadastrarGerente(scanner);
-            case 2 -> colaboradorService.cadastrarColaborador(scanner);
-            default -> System.out.println("Tipo de usuário inválido.");
         }
     }
 
