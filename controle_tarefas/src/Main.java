@@ -5,6 +5,7 @@ import models.Gerente;
 import services.CategoriaService;
 import services.ColaboradorService;
 import services.GerenteService;
+import services.TarefaResponsavelService;
 import services.TarefaService;
 import utils.DbSetup;
 
@@ -12,8 +13,9 @@ public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static final GerenteService gerenteService = new GerenteService();
     private static final ColaboradorService colaboradorService = new ColaboradorService();
-    private static final TarefaService tarefaService = new TarefaService();
+    private static final TarefaResponsavelService tarefaResponsavelService = new TarefaResponsavelService();
     private static final CategoriaService categoriaService = new CategoriaService();
+    private static final TarefaService tarefaService = new TarefaService();
 
     public static void main(String[] args) {
         DbSetup.criarTabelas();
@@ -75,7 +77,7 @@ public class Main {
                     return;
                 }
                 System.out.println("=== Bem-Vindo, " + colaborador.getNome() + " ===");
-                exibirMenuColaborador();
+                exibirMenuColaborador(colaborador);
             }
             default -> System.out.println("Tipo de usuário inválido.");
         }
@@ -94,47 +96,50 @@ public class Main {
                 7 - Deletar Colaborador
                 8 - Visualizar Categorias de Tarefas
                 9 - Sair
+                10 - Associar Tarefa a Colaboradores
                 """);
             System.out.print("Digite sua escolha: ");
             int escolha = lerInteiro();
 
             switch (escolha) {
                 case 1 -> colaboradorService.cadastrarColaborador(scanner);
-                case 2 -> tarefaService.cadastrarTarefa(scanner, gerente.getId());
-                case 3 -> tarefaService.editarTarefa(scanner, gerente.getId());
+                case 2 -> tarefaResponsavelService.cadastrarTarefa(scanner, gerente.getId());
+                case 3 -> tarefaResponsavelService.editarTarefa(scanner);
                 case 4 -> tarefaService.visualizarTarefas();
-                case 5 -> colaboradorService.listarColaboradores(); // Consulta colaboradores
-                case 6 -> System.out.println("Funcionalidade deletar tarefa ainda não implementada.");
-                case 7 -> System.out.println("Funcionalidade deletar colaborador ainda não implementada.");
-                case 8 -> categoriaService.listarCategorias(); // Consulta categorias
+                case 5 -> colaboradorService.listarColaboradores();
+                case 6 -> tarefaService.deletarTarefa(scanner);
+                case 7 -> colaboradorService.deletarColaborador(scanner);
+                case 8 -> categoriaService.listarCategorias();
                 case 9 -> {
                     System.out.println("Você escolheu sair.");
                     return;
                 }
-                default -> System.out.println("Opção inválida.");
+                case 10 -> tarefaService.associarTarefaAColaboradores(scanner);
+                default -> System.out.println("Opção inválida ou não implementada.");
             }
         }
     }
 
-    private static void exibirMenuColaborador() {
+    private static void exibirMenuColaborador(Colaborador colaborador) {
         while (true) {
             System.out.println("""
                 Funcionalidades disponíveis:
                 1 - Visualizar Tarefas
-                2 - Editar Tarefa
-                3 - Deletar Tarefa
-                4 - Pesquisar Tarefa
-                5 - Sair
+                2 - Editar Status de Tarefa
+                3 - Sair
                 """);
             System.out.print("Digite sua escolha: ");
             int escolha = lerInteiro();
 
-            if (escolha == 5) {
-                System.out.println("Você escolheu sair.");
-                break;
+            switch (escolha) {
+                case 1 -> tarefaService.visualizarTarefasPorColaborador(scanner, colaborador.getId());
+                case 2 -> tarefaService.atualizarStatusTarefa(scanner, colaborador.getId());
+                case 3 -> {
+                    System.out.println("Você escolheu sair.");
+                    return;
+                }
+                default -> System.out.println("Opção inválida ou não implementada.");
             }
-
-            System.out.println("Sem funcionalidade implementada ainda.");
         }
     }
 

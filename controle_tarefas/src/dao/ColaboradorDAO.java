@@ -45,4 +45,37 @@ public class ColaboradorDAO {
         }
         return null;
     }
+
+    public boolean deletar(int id) {
+        String sql = "DELETE FROM colaborador WHERE id = ?";
+
+        try (Connection conn = conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            System.out.println("Erro ao deletar colaborador: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void listarColaboradores() {
+        String sql = "SELECT id, nome, email FROM colaborador";
+
+        try (Connection conn = conexao.conectar();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            System.out.println("=== Lista de Colaboradores ===");
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String email = rs.getString("email");
+                System.out.printf("ID: %d | Nome: %s | Email: %s%n", id, nome, email);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao listar colaboradores: " + e.getMessage());
+        }
+    }
 }

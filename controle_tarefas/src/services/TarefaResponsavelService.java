@@ -5,7 +5,7 @@ import models.Tarefa;
 
 import java.util.Scanner;
 
-public class TarefaService {
+public class TarefaResponsavelService {
     private final TarefaDAO tarefaDAO = new TarefaDAO();
 
     public void cadastrarTarefa(Scanner scanner, int gerenteId) {

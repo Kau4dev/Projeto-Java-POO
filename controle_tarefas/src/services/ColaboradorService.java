@@ -31,7 +31,6 @@ public class ColaboradorService {
 
     public Colaborador loginColaborador(Scanner scanner) {
         System.out.println("\n=== Login de Colaborador ===");
-
         
         System.out.print("Email: ");
         String email = scanner.nextLine();
@@ -52,22 +51,21 @@ public class ColaboradorService {
     }
     
     public void listarColaboradores() {
-    String sql = "SELECT id, nome, email FROM colaboradores";
-    try (Connection conn = DbSetup.getConnection();
-         Statement stmt = conn.createStatement();
-         ResultSet rs = stmt.executeQuery(sql)) {
-
-        System.out.println("=== Lista de Colaboradores ===");
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            String nome = rs.getString("nome");
-            String email = rs.getString("email");
-            System.out.printf("ID: %d | Nome: %s | Email: %s%n", id, nome, email);
-        }
-
-    } catch (SQLException e) {
-        System.out.println("Erro ao listar colaboradores: " + e.getMessage());
+        ColaboradorDAO colaboradorDAO = new ColaboradorDAO();
+        colaboradorDAO.listarColaboradores();
     }
-}
 
+    public void deletarColaborador(Scanner scanner) {
+        System.out.print("Digite o ID do colaborador a ser deletado: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        ColaboradorDAO colaboradorDAO = new ColaboradorDAO();
+        boolean sucesso = colaboradorDAO.deletar(id);
+
+        if (sucesso) {
+            System.out.println("✅ Colaborador deletado com sucesso!");
+        } else {
+            System.out.println("❌ Colaborador não encontrado ou erro ao deletar.");
+        }
+    }
 }
