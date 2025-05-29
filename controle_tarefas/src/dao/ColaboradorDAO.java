@@ -59,4 +59,23 @@ public class ColaboradorDAO {
             return false;
         }
     }
+
+    public void listarColaboradores() {
+        String sql = "SELECT id, nome, email FROM colaborador";
+
+        try (Connection conn = conexao.conectar();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            System.out.println("=== Lista de Colaboradores ===");
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String email = rs.getString("email");
+                System.out.printf("ID: %d | Nome: %s | Email: %s%n", id, nome, email);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao listar colaboradores: " + e.getMessage());
+        }
+    }
 }

@@ -2,8 +2,10 @@ import java.util.Scanner;
 
 import models.Colaborador;
 import models.Gerente;
+import services.CategoriaService;
 import services.ColaboradorService;
 import services.GerenteService;
+import services.TarefaResponsavelService;
 import services.TarefaService;
 import utils.DbSetup;
 
@@ -11,6 +13,8 @@ public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static final GerenteService gerenteService = new GerenteService();
     private static final ColaboradorService colaboradorService = new ColaboradorService();
+    private static final TarefaResponsavelService tarefaResponsavelService = new TarefaResponsavelService();
+    private static final CategoriaService categoriaService = new CategoriaService();
     private static final TarefaService tarefaService = new TarefaService();
 
     public static void main(String[] args) {
@@ -90,7 +94,7 @@ public class Main {
                 5 - Visualizar Colaboradores
                 6 - Deletar Tarefa
                 7 - Deletar Colaborador
-                8 - Visualizar Categorias
+                8 - Visualizar Categorias de Tarefas
                 9 - Sair
                 10 - Associar Tarefa a Colaboradores
                 """);
@@ -99,13 +103,13 @@ public class Main {
 
             switch (escolha) {
                 case 1 -> colaboradorService.cadastrarColaborador(scanner);
-                case 2 -> tarefaService.cadastrarTarefa(scanner, gerente.getId());
-                case 3 -> tarefaService.editarTarefa(scanner, gerente.getId());
+                case 2 -> tarefaResponsavelService.cadastrarTarefa(scanner, gerente.getId());
+                case 3 -> tarefaResponsavelService.editarTarefa(scanner);
                 case 4 -> tarefaService.visualizarTarefas();
-                case 5 -> colaboradorService.visualizarColaboradores();
+                case 5 -> colaboradorService.listarColaboradores();
                 case 6 -> tarefaService.deletarTarefa(scanner);
                 case 7 -> colaboradorService.deletarColaborador(scanner);
-                case 8 -> tarefaService.visualizarCategorias();
+                case 8 -> categoriaService.listarCategorias();
                 case 9 -> {
                     System.out.println("Você escolheu sair.");
                     return;

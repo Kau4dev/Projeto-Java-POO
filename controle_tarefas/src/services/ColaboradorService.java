@@ -49,6 +49,11 @@ public class ColaboradorService {
             return null;
         }
     }
+    
+    public void listarColaboradores() {
+        ColaboradorDAO colaboradorDAO = new ColaboradorDAO();
+        colaboradorDAO.listarColaboradores();
+    }
 
     public void deletarColaborador(Scanner scanner) {
         System.out.print("Digite o ID do colaborador a ser deletado: ");
