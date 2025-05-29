@@ -5,6 +5,9 @@ import java.util.Scanner;
 
 import dao.TarefaDAO;
 import models.Tarefa;
+import models.Categoria;
+import dao.CategoriaDAO;
+
 
 public class TarefaService {
     public void associarTarefaAColaboradores(Scanner scanner) {
@@ -53,6 +56,7 @@ public class TarefaService {
                     " | Status: " + tarefa.getStatus()
                 );
             }
+            System.out.println("==============================================================================");
         }
     }
 

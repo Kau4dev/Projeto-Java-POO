@@ -2,20 +2,29 @@ package services;
 
 import dao.TarefaDAO;
 import models.Tarefa;
+import services.TarefaService;
+import services.CategoriaService;
 
 import java.util.Scanner;
 
 public class TarefaResponsavelService {
     private final TarefaDAO tarefaDAO = new TarefaDAO();
+    private final TarefaService tarefaService = new TarefaService();
 
     public void cadastrarTarefa(Scanner scanner, int gerenteId) {
+
+        
+
         System.out.println("\n=== Cadastro de Tarefa ===");
 
-        System.out.print("Título da tarefa: ");
+       System.out.print("Título da tarefa: ");
         String titulo = scanner.nextLine();
 
         System.out.print("Status (pendente, em progresso, concluido): ");
         String status = scanner.nextLine();
+
+        CategoriaService categoriaService = new CategoriaService();
+        categoriaService.listarCategorias(); // Exibe as categorias disponíveis
 
         System.out.print("ID da Categoria: ");
         int categoriaId = Integer.parseInt(scanner.nextLine());
@@ -33,6 +42,8 @@ public class TarefaResponsavelService {
     public void editarTarefa(Scanner scanner) {
         System.out.println("\n=== Editar Tarefa ===");
 
+         tarefaService.visualizarTarefas();
+
         System.out.print("ID da tarefa que deseja editar: ");
         int id = Integer.parseInt(scanner.nextLine());
 
@@ -41,6 +52,9 @@ public class TarefaResponsavelService {
 
         System.out.print("Novo status (pendente, em progresso, concluido): ");
         String status = scanner.nextLine();
+
+        CategoriaService categoriaService = new CategoriaService();
+        categoriaService.listarCategorias();
 
         System.out.print("Novo ID da categoria: ");
         int categoriaId = Integer.parseInt(scanner.nextLine());

@@ -5,7 +5,7 @@ import utils.conexao;
 
 public class CategoriaDAO {
     public void listarCategorias() {
-        String sql = "SELECT id, titulo FROM categorias";
+        String sql = "SELECT id, titulo FROM categoria";
 
         try (Connection conn = conexao.conectar();
              Statement stmt = conn.createStatement();
@@ -17,6 +17,7 @@ public class CategoriaDAO {
                 String titulo = rs.getString("titulo");
                 System.out.printf("ID: %d | Título: %s%n", id, titulo);
             }
+            System.out.println("==============================================================================");
         } catch (SQLException e) {
             System.out.println("Erro ao listar categorias: " + e.getMessage());
         }
