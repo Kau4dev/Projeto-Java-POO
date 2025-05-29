@@ -31,7 +31,6 @@ public class ColaboradorService {
 
     public Colaborador loginColaborador(Scanner scanner) {
         System.out.println("\n=== Login de Colaborador ===");
-
         
         System.out.print("Email: ");
         String email = scanner.nextLine();
@@ -50,5 +49,18 @@ public class ColaboradorService {
             return null;
         }
     }
-    
+
+    public void deletarColaborador(Scanner scanner) {
+        System.out.print("Digite o ID do colaborador a ser deletado: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        ColaboradorDAO colaboradorDAO = new ColaboradorDAO();
+        boolean sucesso = colaboradorDAO.deletar(id);
+
+        if (sucesso) {
+            System.out.println("✅ Colaborador deletado com sucesso!");
+        } else {
+            System.out.println("❌ Colaborador não encontrado ou erro ao deletar.");
+        }
+    }
 }
