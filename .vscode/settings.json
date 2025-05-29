@@ -1,8 +1,6 @@
 {
-  "java.project.sourcePaths": [
-    "../../Estudos/Facul/2025.1/POO/Projeto-Java-POO/controle_tarefas/src",
-    "controle_tarefas/src"
-  ],
+  "java.project.sourcePaths": ["controle_tarefas/src"],
+  "java.project.outputPath": "bin",
   "java.project.referencedLibraries": [
     "controle_tarefas\\lib\\sqlite-jdbc-3.49.1.0.jar"
   ],
