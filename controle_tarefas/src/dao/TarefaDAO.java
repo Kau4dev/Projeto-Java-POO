@@ -29,7 +29,8 @@ public class TarefaDAO {
 
     public List<Tarefa> listarPorColaborador(int colaboradorId) {
         List<Tarefa> lista = new ArrayList<>();
-        String sql = "SELECT * FROM tarefa WHERE colaborador_id = ?";
+        String sql = "SELECT * FROM tarefa WHERE id IN " +
+                     "(SELECT tarefa_id FROM tarefa_responsavel WHERE colaborador_id = ?)";
 
         try (Connection conn = conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
