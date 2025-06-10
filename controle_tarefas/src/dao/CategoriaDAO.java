@@ -5,7 +5,7 @@ import utils.conexao;
 
 public class CategoriaDAO {
     public void listarCategorias() {
-        String sql = "SELECT id, titulo FROM categorias";
+        String sql = "SELECT id, titulo FROM categoria";
 
         try (Connection conn = conexao.conectar();
              Statement stmt = conn.createStatement();

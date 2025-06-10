@@ -6,8 +6,16 @@ import java.util.Scanner;
 import dao.TarefaDAO;
 import models.Tarefa;
 
+
 public class TarefaService {
+        private static final ColaboradorService colaboradorService = new ColaboradorService();
+        private static final CategoriaService categoriaService = new CategoriaService();
+        private static final TarefaService tarefaService = new TarefaService();
+
     public void associarTarefaAColaboradores(Scanner scanner) {
+        System.out.println("\n=== Associar Tarefa a Colaboradores ===");
+        tarefaService.visualizarTarefas();
+
         System.out.print("ID da tarefa que deseja associar: ");
         int tarefaId = Integer.parseInt(scanner.nextLine());
 
@@ -50,10 +58,13 @@ public class TarefaService {
                 System.out.println(
                     "ID: " + tarefa.getId() +
                     " | Título: " + tarefa.getTitulo() +
-                    " | Status: " + tarefa.getStatus()
+                    " | Status: " + tarefa.getStatus() +
+                    " | Categoria: " + tarefa.getCategoria().getTitulo() 
                 );
             }
+            System.out.println("=========================");
         }
+
     }
 
     public void visualizarTarefasPorColaborador(Scanner scanner, int colaboradorId) {
@@ -72,6 +83,7 @@ public class TarefaService {
                 );
             }
         }
+        System.out.println("===============================");
     }
 
     public void atualizarStatusTarefa(Scanner scanner, int colaboradorId) {

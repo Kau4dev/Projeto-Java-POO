@@ -45,7 +45,7 @@ public class TarefaResponsavelService {
         System.out.print("Novo ID da categoria: ");
         int categoriaId = Integer.parseInt(scanner.nextLine());
 
-        Tarefa tarefa = new Tarefa(id, titulo, status, 0, categoriaId); // gerenteId não é alterado
+        Tarefa tarefa = new Tarefa(id, titulo, status, 0, categoriaId); 
         boolean sucesso = tarefaDAO.editarTarefa(tarefa);
 
         if (sucesso) {

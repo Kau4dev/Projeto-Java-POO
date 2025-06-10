@@ -8,6 +8,7 @@ public class Tarefa {
     private int colaboradorId;
     private int gerenteId;
     private int categoriaId;
+    private Categoria categoria;
 
     public Tarefa() {}
 
@@ -54,4 +55,7 @@ public class Tarefa {
 
     public int getCategoriaId() { return categoriaId; }
     public void setCategoriaId(int categoriaId) { this.categoriaId = categoriaId; }
+
+    public Categoria getCategoria() { return categoria; }
+    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
 }

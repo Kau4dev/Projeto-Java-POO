@@ -17,11 +17,9 @@ public class GerenteService {
 
         System.out.print("Senha: ");
         String senha = scanner.nextLine();
-
-        // Criando objeto Gerente
+      
         Gerente gerente = new Gerente(nome, email, senha);
 
-        // Usando DAO para salvar no banco
         GerenteDAO gerenteDAO = new GerenteDAO();
         boolean sucesso = gerenteDAO.cadastrar(gerente);
 
