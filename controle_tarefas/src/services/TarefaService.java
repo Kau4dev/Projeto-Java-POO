@@ -93,8 +93,28 @@ public class TarefaService {
         System.out.print("ID da tarefa: ");
         int idTarefa = Integer.parseInt(scanner.nextLine());
 
-        System.out.print("Novo status (Ex: Pendente, Em andamento, Concluída): ");
+
+        System.out.print("ID do status: \n");
+
+        System.out.println("1 - Pendente");
+        System.out.println("2 - Em andamento");
+        System.out.println("3 - Concluída");
+
         String novoStatus = scanner.nextLine();
+        switch (novoStatus) {
+            case "1":
+                novoStatus = "pendente";
+                break;
+            case "2":
+                novoStatus = "em progresso";
+                break;
+            case "3":
+                novoStatus = "concluido";
+                break;
+            default:
+                System.out.println("Status inválido. Tente novamente.");
+                return;
+        }
 
         TarefaDAO tarefaDAO = new TarefaDAO();
         boolean sucesso = tarefaDAO.atualizarStatus(idTarefa, novoStatus);
