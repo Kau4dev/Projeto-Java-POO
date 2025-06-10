@@ -5,10 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import models.Categoria;
 import models.Tarefa;
+import services.CategoriaService;
 import utils.conexao;
+import models.*;
+import services.ColaboradorService;
+
+
 
 public class TarefaDAO {
+    private final CategoriaService categoriaService = new CategoriaService();
     public boolean cadastrarTarefa(Tarefa tarefa) {
         String sql = "INSERT INTO tarefa (titulo, status, gerente_id, categoria_id) VALUES (?, ?, ?, ?)";
 
@@ -43,6 +50,8 @@ public class TarefaDAO {
                 tarefa.setId(rs.getInt("id"));
                 tarefa.setTitulo(rs.getString("titulo"));
                 tarefa.setStatus(rs.getString("status"));
+                tarefa.setGerenteId(rs.getInt("gerente_id"));
+                tarefa.setCategoriaId(rs.getInt("categoria_id"));
                 lista.add(tarefa);
             }
 
@@ -126,26 +135,36 @@ public class TarefaDAO {
     }
 
     public List<Tarefa> listarTodas() {
-        List<Tarefa> lista = new ArrayList<>();
-        String sql = "SELECT * FROM tarefa";
+    List<Tarefa> lista = new ArrayList<>();
+    String sql = "SELECT tarefa.*, categoria.titulo AS titulo_categoria FROM tarefa " +
+                 "JOIN categoria ON tarefa.categoria_id = categoria.id";
 
-        try (Connection conn = conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+    try (Connection conn = conexao.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
 
-            while (rs.next()) {
-                Tarefa tarefa = new Tarefa();
-                tarefa.setId(rs.getInt("id"));
-                tarefa.setTitulo(rs.getString("titulo"));
-                tarefa.setStatus(rs.getString("status"));
-                lista.add(tarefa);
-            }
+        while (rs.next()) {
+            Tarefa tarefa = new Tarefa();
+            tarefa.setId(rs.getInt("id"));
+            tarefa.setTitulo(rs.getString("titulo"));
+            tarefa.setStatus(rs.getString("status"));
+            tarefa.setGerenteId(rs.getInt("gerente_id"));
+            tarefa.setCategoriaId(rs.getInt("categoria_id"));
 
-        } catch (SQLException e) {
-            System.out.println("Erro ao listar todas as tarefas: " + e.getMessage());
+            Categoria categoria = new Categoria();
+            categoria.setId(rs.getInt("categoria_id")); 
+            categoria.setTitulo(rs.getString("titulo_categoria"));
+            tarefa.setCategoria(categoria);
+
+            lista.add(tarefa);
         }
 
-        return lista;
+    } catch (SQLException e) {
+        System.out.println("Erro ao listar todas as tarefas: " + e.getMessage());
     }
+
+    return lista;
+}
+
 }
 
