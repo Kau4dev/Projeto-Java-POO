@@ -17,6 +17,7 @@ public class CategoriaDAO {
                 String titulo = rs.getString("titulo");
                 System.out.printf("ID: %d | Título: %s%n", id, titulo);
             }
+            System.out.println("==============================================================================");
         } catch (SQLException e) {
             System.out.println("Erro ao listar categorias: " + e.getMessage());
         }

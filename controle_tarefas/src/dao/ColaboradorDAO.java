@@ -84,7 +84,7 @@ public class ColaboradorDAO {
 
      public List<Tarefa> listarTarefasPorColaborador(int colaboradorId) {
         List<Tarefa> lista = new ArrayList<>();
-        String sql = "SELECT * FROM tarefas WHERE colaborador_id = ?";
+        String sql = "SELECT * FROM tarefa WHERE colaborador_id = ?";
 
         try (Connection conn = conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -96,9 +96,7 @@ public class ColaboradorDAO {
                 Tarefa tarefa = new Tarefa();
                 tarefa.setId(rs.getInt("id"));
                 tarefa.setTitulo(rs.getString("titulo"));
-                tarefa.setDescricao(rs.getString("descricao"));
                 tarefa.setStatus(rs.getString("status"));
-                tarefa.setColaboradorId(rs.getInt("colaborador_id"));
                 lista.add(tarefa);
             }
 

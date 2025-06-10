@@ -7,6 +7,7 @@ import dao.TarefaDAO;
 import models.Tarefa;
 
 
+
 public class TarefaService {
         private static final ColaboradorService colaboradorService = new ColaboradorService();
         private static final CategoriaService categoriaService = new CategoriaService();
@@ -62,7 +63,7 @@ public class TarefaService {
                     " | Categoria: " + tarefa.getCategoria().getTitulo() 
                 );
             }
-            System.out.println("=========================");
+            System.out.println("==============================================================================");
         }
 
     }
